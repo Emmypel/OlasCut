@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OLA CUTZ | Premium Barbering & Grooming Parlor</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            400: '#fbbf24',
+                            500: '#d4af37',
+                            600: '#b89628',
+                        },
+                        dark: {
+                            900: '#0a0a0a',
+                            800: '#121212',
+                            700: '#1a1a1a',
+                            600: '#262626',
+                            500: '#333333'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Cinzel', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #262626;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d4af37;
+        }
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #fef08a 0%, #d4af37 50%, #9a7b1c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-border-glow {
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-dark-900 text-gray-200 font-sans antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-40 bg-dark-800/90 backdrop-blur-md border-b border-dark-600">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
+                    <div class="w-10 h-10 rounded-full bg-gold-500/10 border border-gold-500/40 flex items-center justify-center text-gold-500 text-xl shadow-lg">
+                        <i class="fa-solid font-bold fa-scissors"></i>
+                    </div>
+                    <div>
+                        <span class="font-heading font-bold text-xl tracking-wider text-white block">OLA CUTZ</span>
+                        <span class="text-[10px] text-gold-500 tracking-widest uppercase block -mt-1">Grooming & Style Lounge</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Nav Links -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <button onclick="navigateTo('home')" class="nav-btn text-gray-300 hover:text-gold-500 transition-colors font-medium">Home</button>
+                    <button onclick="scrollToSection('services')" class="nav-btn text-gray-300 hover:text-gold-500 transition-colors font-medium">Services</button>
+                    <button onclick="scrollToSection('gallery')" class="nav-btn text-gray-300 hover:text-gold-500 transition-colors font-medium">Hairstyle Gallery</button>
+                    <button onclick="scrollToSection('branches')" class="nav-btn text-gray-300 hover:text-gold-500 transition-colors font-medium">Locations</button>
+                    
+                    <!-- Dynamic Nav links -->
+                    <div id="dynamic-nav-links" class="inline-flex space-x-6"></div>
+                </nav>
+
+                <!-- Auth Buttons / User Profile Menu -->
+                <div class="hidden md:flex items-center gap-4" id="nav-auth-container"></div>
+
+                <!-- Mobile Hamburger Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden bg-dark-800 border-b border-dark-600 px-4 pt-2 pb-6 space-y-3">
+            <button onclick="navigateTo('home'); toggleMobileMenu()" class="block w-full text-left py-2 text-gray-300 hover:text-gold-500">Home</button>
+            <button onclick="scrollToSection('services'); toggleMobileMenu()" class="block w-full text-left py-2 text-gray-300 hover:text-gold-500">Services</button>
+            <button onclick="scrollToSection('gallery'); toggleMobileMenu()" class="block w-full text-left py-2 text-gray-300 hover:text-gold-500">Hairstyle Gallery</button>
+            <button onclick="scrollToSection('branches'); toggleMobileMenu()" class="block w-full text-left py-2 text-gray-300 hover:text-gold-500">Locations</button>
+            <div id="mobile-dynamic-links"></div>
+            <div id="mobile-auth-container" class="pt-2 border-t border-dark-700"></div>
+        </div>
+    </header>
+
+    <!-- Main Content Containers -->
+    <main class="flex-grow">
+        <!-- 1. PUBLIC LANDING PAGE VIEW -->
+        <div id="view-home" class="page-view">
+            <!-- Hero Section -->
+            <section class="relative bg-dark-900 py-20 md:py-32 overflow-hidden border-b border-dark-700">
+                <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                        <div class="space-y-6 text-center lg:text-left">
+                            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gold-500/10 border border-gold-500/30 text-gold-500 text-xs font-semibold uppercase tracking-widest">
+                                <i class="fa-solid fa-crown text-xs"></i> Premier Nigerian Barber Lounge
+                            </div>
+                            <h1 class="text-4xl sm:text-6xl font-heading font-extrabold text-white tracking-tight leading-tight">
+                                Ola CutZ.<br/>
+                                <span class="gold-gradient-text">Precision & Craft.</span>
+                            </h1>
+                            <p class="text-gray-400 text-lg max-w-xl mx-auto lg:mx-0">
+                                Experience master-class fades, beard sculpting, and luxury grooming treatments at our flagship branches in Ilorin, Kwara State & Lagos State.
+                            </p>
+                            <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
+                                <button onclick="openBookingModal()" class="px-8 py-4 bg-gold-500 hover:bg-gold-600 text-dark-900 font-bold rounded-lg shadow-lg hover:shadow-gold-500/20 transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                                    <i class="fa-regular fa-calendar-check"></i> Book Appointment Now
+                                </button>
+                                <button onclick="openAuthModal('login')" class="px-8 py-4 bg-dark-700 hover:bg-dark-600 text-white font-semibold rounded-lg border border-dark-500 transition-all flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-user"></i> Client / Staff Portal
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Hero Graphic / Cards -->
+                        <div class="relative flex justify-center">
+                            <div class="relative w-full max-w-md bg-dark-800 rounded-2xl p-6 border border-dark-600 shadow-2xl gold-border-glow">
+                                <div class="flex items-center justify-between border-b border-dark-700 pb-4 mb-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-12 h-12 rounded-full bg-gold-500/20 text-gold-500 flex items-center justify-center text-xl font-bold">
+                                            <i class="fa-solid fa-award"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold text-white">Ola CutZ Studios</h4>
+                                            <p class="text-xs text-gray-400">Premium Grooming Guarantee</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs font-semibold px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Open Daily</span>
+                                </div>
+                                
+                                <div class="space-y-3">
+                                    <div class="p-3 rounded-lg bg-dark-700/50 flex items-center justify-between">
+                                        <div class="flex items-center gap-3">
+                                            <i class="fa-solid fa-location-dot text-gold-500"></i>
+                                            <div>
+                                                <p class="text-xs text-gray-400 uppercase font-semibold">Ilorin Branch</p>
+                                                <p class="text-sm font-semibold text-white">Kwara State</p>
+                                            </div>
+                                        </div>
+                                        <span class="text-xs text-gold-500 font-bold">₦3,500+</span>
+                                    </div>
+                                    <div class="p-3 rounded-lg bg-dark-700/50 flex items-center justify-between">
+                                        <div class="flex items-center gap-3">
+                                            <i class="fa-solid fa-location-dot text-gold-500"></i>
+                                            <div>
+                                                <p class="text-xs text-gray-400 uppercase font-semibold">Lagos Branch</p>
+                                                <p class="text-sm font-semibold text-white">Lagos State</p>
+                                            </div>
+                                        </div>
+                                        <span class="text-xs text-gold-500 font-bold">₦5,000+</span>
+                                    </div>
+                                </div>
+
+                                <div class="mt-6 pt-4 border-t border-dark-700 flex flex-col gap-2 text-xs text-gray-400">
+                                    <div class="flex items-center justify-between">
+                                        <span><i class="fa-solid fa-phone text-gold-500 mr-1.5"></i> <a href="tel:+2347016037881" class="hover:text-gold-500 transition">+234 701 603 7881</a></span>
+                                        <span><i class="fa-solid fa-envelope text-gold-500 mr-1.5"></i> hormola25@gmail.com</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Services Section -->
+            <section id="services" class="py-20 bg-dark-800 border-b border-dark-700">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center max-w-3xl mx-auto mb-16">
+                        <h2 class="text-xs font-semibold uppercase tracking-widest text-gold-500 mb-2">Our Menu & Rates</h2>
+                        <h3 class="text-3xl sm:text-4xl font-heading font-bold text-white">Signature Services (₦)</h3>
+                        <p class="text-gray-400 mt-3">Tailored treatments using top-shelf grooming products for sharper, cleaner looks.</p>
+                    </div>
+
+                    <div id="services-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Hairstyle Gallery Section -->
+            <section id="gallery" class="py-20 bg-dark-900 border-b border-dark-700">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center max-w-3xl mx-auto mb-10">
+                        <h2 class="text-xs font-semibold uppercase tracking-widest text-gold-500 mb-2">Style Catalog</h2>
+                        <h3 class="text-3xl sm:text-4xl font-heading font-bold text-white">Haircut Styles Gallery</h3>
+                        <p class="text-gray-400 mt-3">Browse signature styles tailored by Ola CutZ. Click any category filter to refine your view.</p>
+                    </div>
+
+                    <!-- Category Filter Buttons -->
+                    <div id="gallery-filters" class="flex flex-wrap items-center justify-center gap-2 mb-10">
+                        <!-- Populated by JS -->
+                    </div>
+
+                    <!-- Gallery Grid -->
+                    <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Branches / Locations Section -->
+            <section id="branches" class="py-20 bg-dark-800 border-b border-dark-700">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center max-w-3xl mx-auto mb-16">
+                        <h2 class="text-xs font-semibold uppercase tracking-widest text-gold-500 mb-2">Our Hubs</h2>
+                        <h3 class="text-3xl sm:text-4xl font-heading font-bold text-white">Visit Ola CutZ Branches</h3>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Ilorin Branch -->
+                        <div class="bg-dark-900 p-8 rounded-2xl border border-dark-700 hover:border-gold-500/50 transition">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="px-3 py-1 bg-gold-500/10 border border-gold-500/30 text-gold-500 rounded-full text-xs font-semibold uppercase">Branch 01</span>
+                                <i class="fa-solid fa-store text-2xl text-gold-500"></i>
+                            </div>
+                            <h4 class="text-2xl font-bold text-white mb-2">Ilorin Branch, Kwara State</h4>
+                            <p class="text-gray-400 text-sm mb-6">Located in the heart of Ilorin city. Fully air-conditioned lounge, VIP waiting area, and complimentary drinks.</p>
+                            <div class="space-y-2 text-xs text-gray-300 border-t border-dark-700 pt-4">
+                                <p><i class="fa-solid fa-clock text-gold-500 mr-2"></i> Mon - Sat: 8:30 AM - 8:00 PM | Sun: 12:00 PM - 6:00 PM</p>
+                                <p><i class="fa-solid fa-phone text-gold-500 mr-2"></i> <a href="tel:+2347016037881" class="hover:text-gold-500">+234 701 603 7881</a></p>
+                            </div>
+                            <button onclick="openBookingModalWithLocation('Ilorin, Kwara State')" class="w-full mt-6 py-3 bg-dark-700 hover:bg-gold-500 hover:text-dark-900 text-gold-500 font-bold rounded-lg transition text-xs uppercase tracking-wider">Book at Ilorin</button>
+                        </div>
+
+                        <!-- Lagos Branch -->
+                        <div class="bg-dark-900 p-8 rounded-2xl border border-dark-700 hover:border-gold-500/50 transition">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="px-3 py-1 bg-gold-500/10 border border-gold-500/30 text-gold-500 rounded-full text-xs font-semibold uppercase">Branch 02</span>
+                                <i class="fa-solid fa-building text-2xl text-gold-500"></i>
+                            </div>
+                            <h4 class="text-2xl font-bold text-white mb-2">Lagos Branch, Lagos State</h4>
+                            <p class="text-gray-400 text-sm mb-6">Modern executive grooming lounge equipped with premium spa chairs, steam shaves, and top stylists.</p>
+                            <div class="space-y-2 text-xs text-gray-300 border-t border-dark-700 pt-4">
+                                <p><i class="fa-solid fa-clock text-gold-500 mr-2"></i> Mon - Sat: 9:00 AM - 9:00 PM | Sun: 1:00 PM - 7:00 PM</p>
+                                <p><i class="fa-solid fa-phone text-gold-500 mr-2"></i> <a href="tel:+2347016037881" class="hover:text-gold-500">+234 701 603 7881</a></p>
+                            </div>
+                            <button onclick="openBookingModalWithLocation('Lagos State')" class="w-full mt-6 py-3 bg-dark-700 hover:bg-gold-500 hover:text-dark-900 text-gold-500 font-bold rounded-lg transition text-xs uppercase tracking-wider">Book at Lagos</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- 2. CUSTOMER DASHBOARD VIEW -->
+        <div id="view-customer" class="page-view hidden py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 pb-6 border-b border-dark-700 gap-4">
+                <div>
+                    <h1 class="text-3xl font-heading font-bold text-white">Client Portal</h1>
+                    <p class="text-gray-400 text-sm">Welcome back, <span id="cust-display-name" class="text-gold-500 font-semibold">Client</span></p>
+                </div>
+                <button onclick="openBookingModal()" class="px-6 py-3 bg-gold-500 hover:bg-gold-600 text-dark-900 font-bold rounded-lg shadow-lg flex items-center gap-2">
+                    <i class="fa-solid fa-plus"></i> Book New Session
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- User Profile & Info -->
+                <div class="bg-dark-800 rounded-xl p-6 border border-dark-700 h-fit">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-16 h-16 rounded-full bg-gold-500/10 border-2 border-gold-500 flex items-center justify-center text-gold-500 text-2xl font-bold">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div>
+                            <h3 id="cust-card-name" class="text-lg font-bold text-white">Client Name</h3>
+                            <p id="cust-card-email" class="text-xs text-gray-400">client@example.com</p>
+                            <p id="cust-card-phone" class="text-xs text-gold-500 mt-0.5"><i class="fa-solid fa-phone mr-1"></i> +234 ...</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 border-t border-dark-700 pt-4">
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-gray-400">Ola CutZ Rewards</span>
+                            <span class="font-bold text-gold-500">180 pts</span>
+                        </div>
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-gray-400">Preferred Branch</span>
+                            <span class="font-semibold text-emerald-400">Ilorin / Lagos</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Customer Appointments Table -->
+                <div class="lg:col-span-2 bg-dark-800 rounded-xl border border-dark-700 p-6">
+                    <h3 class="text-xl font-bold text-white mb-4 flex items-center justify-between">
+                        <span>My Appointments</span>
+                        <span id="customer-appt-count" class="text-xs px-2.5 py-1 bg-dark-700 rounded-full text-gray-400 font-normal">0 Total</span>
+                    </h3>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm text-gray-400">
+                            <thead class="bg-dark-700 text-gray-300 text-xs uppercase tracking-wider">
+                                <tr>
+                                    <th class="py-3 px-4">Service</th>
+                                    <th class="py-3 px-4">Branch</th>
+                                    <th class="py-3 px-4">Date & Time</th>
+                                    <th class="py-3 px-4">Price</th>
+                                    <th class="py-3 px-4">Status</th>
+                                    <th class="py-3 px-4 text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customer-appointments-tbody" class="divide-y divide-dark-700">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. ADMIN DASHBOARD VIEW -->
+        <div id="view-admin" class="page-view hidden py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 pb-6 border-b border-dark-700 gap-4">
+                <div>
+                    <h1 class="text-3xl font-heading font-bold text-white flex items-center gap-2">
+                        <span>Ola CutZ Admin Console</span>
+                        <span class="text-xs bg-red-500/20 border border-red-500/40 text-red-400 px-2.5 py-1 rounded font-sans uppercase font-semibold">Manager</span>
+                    </h1>
+                    <p class="text-gray-400 text-sm">Managing revenue in Naira (₦), customer contacts, and multi-branch appointments.</p>
+                </div>
+            </div>
+
+            <!-- Admin Overview Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-dark-800 p-6 rounded-xl border border-dark-700">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-gray-400 font-semibold uppercase">Total Revenue (₦)</span>
+                        <span class="text-gold-500 font-bold">₦</span>
+                    </div>
+                    <p class="text-3xl font-bold text-white mt-2" id="admin-stat-revenue">₦0</p>
+                    <p class="text-xs text-emerald-400 mt-1"><i class="fa-solid fa-arrow-trend-up"></i> Live calculation</p>
+                </div>
+
+                <div class="bg-dark-800 p-6 rounded-xl border border-dark-700">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-gray-400 font-semibold uppercase">Total Bookings</span>
+                        <i class="fa-regular fa-calendar-check text-blue-400"></i>
+                    </div>
+                    <p class="text-3xl font-bold text-white mt-2" id="admin-stat-total">0</p>
+                    <p class="text-xs text-gray-400 mt-1">Across all branches</p>
+                </div>
+
+                <div class="bg-dark-800 p-6 rounded-xl border border-dark-700">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-gray-400 font-semibold uppercase">Confirmed Bookings</span>
+                        <i class="fa-solid fa-clock text-amber-400"></i>
+                    </div>
+                    <p class="text-3xl font-bold text-white mt-2" id="admin-stat-upcoming">0</p>
+                    <p class="text-xs text-amber-400 mt-1">Active schedule</p>
+                </div>
+
+                <div class="bg-dark-800 p-6 rounded-xl border border-dark-700">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-gray-400 font-semibold uppercase">Registered Clients</span>
+                        <i class="fa-solid fa-users text-purple-400"></i>
+                    </div>
+                    <p class="text-3xl font-bold text-white mt-2" id="admin-stat-clients">0</p>
+                    <p class="text-xs text-purple-400 mt-1">With phone contacts</p>
+                </div>
+            </div>
+
+            <!-- Admin Appointments Management Table -->
+            <div class="bg-dark-800 rounded-xl border border-dark-700 p-6 mb-8">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                    <h3 class="text-xl font-bold text-white">Bookings & Client Calls</h3>
+                    
+                    <div class="flex flex-wrap items-center gap-3">
+                        <!-- Location Filter -->
+                        <div>
+                            <select id="admin-filter-location" onchange="renderAdminAppointments()" class="bg-dark-700 text-white text-xs rounded border border-dark-600 px-3 py-2 focus:outline-none focus:border-gold-500">
+                                <option value="all">All Locations</option>
+                                <option value="Ilorin, Kwara State">Ilorin, Kwara State</option>
+                                <option value="Lagos State">Lagos State</option>
+                            </select>
+                        </div>
+                        <!-- Status Filter -->
+                        <div>
+                            <select id="admin-filter-status" onchange="renderAdminAppointments()" class="bg-dark-700 text-white text-xs rounded border border-dark-600 px-3 py-2 focus:outline-none focus:border-gold-500">
+                                <option value="all">All Statuses</option>
+                                <option value="Confirmed">Confirmed</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm text-gray-400">
+                        <thead class="bg-dark-700 text-gray-300 text-xs uppercase tracking-wider">
+                            <tr>
+                                <th class="py-3 px-4">Client Contact</th>
+                                <th class="py-3 px-4">Branch</th>
+                                <th class="py-3 px-4">Service</th>
+                                <th class="py-3 px-4">Date & Time</th>
+                                <th class="py-3 px-4">Price (₦)</th>
+                                <th class="py-3 px-4">Status</th>
+                                <th class="py-3 px-4 text-center">Manage</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-appointments-tbody" class="divide-y divide-dark-700">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Admin Registered Clients Directory -->
+            <div class="bg-dark-800 rounded-xl border border-dark-700 p-6">
+                <h3 class="text-xl font-bold text-white mb-4">Client Phone Directory</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm text-gray-400">
+                        <thead class="bg-dark-700 text-gray-300 text-xs uppercase tracking-wider">
+                            <tr>
+                                <th class="py-3 px-4">Client Name</th>
+                                <th class="py-3 px-4">Email</th>
+                                <th class="py-3 px-4">Phone Number</th>
+                                <th class="py-3 px-4">Role</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-clients-tbody" class="divide-y divide-dark-700">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="bg-dark-800 border-t border-dark-700 py-12 text-gray-400 text-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fa-solid fa-scissors text-gold-500 text-xl"></i>
+                        <span class="font-heading font-bold text-white text-lg tracking-wider">OLA CUTZ</span>
+                    </div>
+                    <p class="text-xs leading-relaxed text-gray-400">
+                        Nigeria's premier barbering and hair studio. Delivering razor-sharp cuts, beard design, and skin care in Ilorin & Lagos.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white mb-3 text-xs uppercase tracking-wider">Quick Links</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><button onclick="navigateTo('home')" class="hover:text-gold-500 transition">Home</button></li>
+                        <li><button onclick="scrollToSection('services')" class="hover:text-gold-500 transition">Services Menu</button></li>
+                        <li><button onclick="scrollToSection('gallery')" class="hover:text-gold-500 transition">Styles Gallery</button></li>
+                        <li><button onclick="openBookingModal()" class="hover:text-gold-500 transition">Book Appointment</button></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white mb-3 text-xs uppercase tracking-wider">Contact Info</h4>
+                    <ul class="space-y-2 text-xs text-gray-400">
+                        <li><i class="fa-solid fa-phone text-gold-500 mr-2"></i> <a href="tel:+2347016037881" class="hover:text-white">+234 701 603 7881</a></li>
+                        <li><i class="fa-solid fa-envelope text-gold-500 mr-2"></i> <a href="mailto:hormola25@gmail.com" class="hover:text-white">hormola25@gmail.com</a></li>
+                        <li><i class="fa-solid fa-map-pin text-gold-500 mr-2"></i> Ilorin, Kwara State</li>
+                        <li><i class="fa-solid fa-map-pin text-gold-500 mr-2"></i> Lagos State</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white mb-3 text-xs uppercase tracking-wider">Operating Hours</h4>
+                    <ul class="space-y-1.5 text-xs text-gray-400">
+                        <li class="flex justify-between"><span>Mon - Sat:</span> <span>8:30 AM - 9:00 PM</span></li>
+                        <li class="flex justify-between"><span>Sunday:</span> <span>12:00 PM - 7:00 PM</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-dark-700 mt-8 pt-6 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-500 gap-4">
+                <div>&copy; 2026 Ola CutZ. All rights reserved.</div>
+                <div class="flex gap-4 text-gray-400">
+                    <a href="tel:+2347016037881" class="hover:text-gold-500"><i class="fa-solid fa-phone"></i> Direct Call</a>
+                    <a href="mailto:hormola25@gmail.com" class="hover:text-gold-500"><i class="fa-solid fa-envelope"></i> Email Us</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- UNIFIED AUTH MODAL (LOGIN & REGISTER) -->
+    <div id="auth-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-dark-800 border border-dark-600 w-full max-w-md rounded-2xl p-6 sm:p-8 shadow-2xl relative gold-border-glow">
+            <!-- Close Button -->
+            <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white p-2">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <!-- Modal Header -->
+            <div class="text-center mb-6">
+                <div class="inline-flex w-12 h-12 rounded-full bg-gold-500/10 border border-gold-500/40 items-center justify-center text-gold-500 text-xl mb-3">
+                    <i class="fa-solid fa-user-lock"></i>
+                </div>
+                <h3 class="text-2xl font-heading font-bold text-white" id="auth-modal-title">Ola CutZ Portal</h3>
+                <p class="text-xs text-gray-400 mt-1">Sign in or register your account to manage appointments</p>
+            </div>
+
+            <!-- Tabs: Sign In / Register -->
+            <div class="flex border-b border-dark-600 mb-6">
+                <button id="tab-login" onclick="switchAuthTab('login')" class="flex-1 py-2 text-sm font-semibold text-gold-500 border-b-2 border-gold-500 text-center">Sign In</button>
+                <button id="tab-register" onclick="switchAuthTab('register')" class="flex-1 py-2 text-sm font-semibold text-gray-400 border-b-2 border-transparent hover:text-gray-200 text-center">Register</button>
+            </div>
+
+            <!-- Optional Demo Quick Toggle (Clean & Subtle) -->
+            <div class="mb-4 text-right">
+                <button onclick="toggleDemoAssist()" class="text-[11px] text-gray-400 hover:text-gold-500 transition underline">
+                    <i class="fa-solid fa-circle-info mr-1"></i> Quick Fill Testing Login
+                </button>
+                <div id="demo-assist-box" class="hidden mt-2 p-2.5 bg-dark-900 border border-dark-700 rounded text-left text-xs space-y-2">
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-300 font-semibold">Admin Account:</span>
+                        <button onclick="fillDemo('admin')" class="px-2 py-0.5 bg-gold-500 text-dark-900 font-bold rounded text-[10px]">Fill Admin</button>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-300 font-semibold">Client Account:</span>
+                        <button onclick="fillDemo('customer')" class="px-2 py-0.5 bg-dark-700 text-white rounded text-[10px]">Fill Client</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Unified Login Form -->
+            <form id="form-login" onsubmit="handleLoginSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 uppercase mb-1">Email Address</label>
+                    <input type="email" id="login-email" required class="w-full bg-dark-900 border border-dark-600 rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-gold-500 text-sm" placeholder="e.g. client@example.com">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 uppercase mb-1">Password</label>
+                    <input type="password" id="login-password" required class="w-full bg-dark-900 border border-dark-600 rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-gold-500 text-sm" placeholder="••••••••">
+                </div>
+                <button type="submit" class="w-full py-3 bg-gold-500 hover:bg-gold-600 text-dark-900 font-bold rounded-lg shadow-md transition text-sm">
+                    Sign In to Portal
+                </button>
+            </form>
+
+            <!-- Register Form (Includes REQUIRED Phone Number) -->
+            <form id="form-register" onsubmit="handleRegisterSubmit(event)" class="space-y-4 hidden">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 uppercase mb-1">Full Name</label>
+                    <input type="text" id="reg-name" required class="w-full bg-dark-900 border border-dark-600 rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-gold-500 text-sm" placeholder="e.g. Ibrahim Babangida">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 uppercase mb-1">Phone Number <span class="text-gold-500">*</span></label>
+                    <input type="tel" id="reg-phone" required class="w-full bg-dark-900 border border-dark-600 rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-gold-500 text-sm" placeholder="+234 800 000 0000">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 uppercase mb-1">Email Address</label>
+                    <input type="email" id="reg-email" required class="w-full bg-dark-900 border border-dark-600 rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-gold-500 text-sm" placeholder="name@domain.com">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 uppercase mb-1">Password</label>
+                    <input type="password" id="reg-password" required class="w-full bg-dark-900 border border-dark-600 rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-gold-500 text-sm" placeholder="••••••••">
+                </div>
+                <button type="submit" class="w-full py-3 bg-gold-500 hover:bg-gold-600 text-dark-900 font-bold rounded-lg shadow-md transition text-sm">
+                    Create Account
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- APPOINTMENT BOOKING MODAL -->
+    <div id="booking-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-dark-800 border border-dark-600 w-full max-w-lg rounded-2xl p-6 sm:p-8 shadow-2xl relative my-8">
+            <button onclick="closeBookingModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white p-2">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <div class="mb-6">
+                <h3 class="text-2xl font-heading font-bold text-white">Book Your Ola CutZ Session</h3>
+                <p class="text-xs text-gray-400">Select location, preferred service, and time slot.</p>
+            </div>
+
+            <form id="form-booking" onsubmit="handleBookingSubmit(event)" class="space-y-4">
+                <!-- Location Selection -->
+                <div>
+                    <label class="block text-xs font-semibold text-gold-500 uppercase mb-1">Select Branch Location</label>
+                    <select id="book-location" required class="w-full bg-dark-900 border border-dark-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-gold-500 text-sm">
+                        <option value="Ilorin, Kwara State">Ilorin Branch, Kwara State</option>
+                        <option value="Lagos State">Lagos Branch, Lagos State</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 uppercase mb-1">Select Service</label>
+                    <select id="book-service" required class="w-full bg-dark-900 border border-dark-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-gold-500 text-sm">
+                        <!-- Populated dynamically -->
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 uppercase mb-1">Date</label>
+                        <input type="date" id="book-date" required class="w-full bg-dark-900 border border-dark-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-gold-500 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 uppercase mb-1">Time Slot</label>
+                        <select id="book-time" required class="w-full bg-dark-900 border border-dark-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-gold-500 text-sm">
+                            <option value="09:00 AM">09:00 AM</option>
+                            <option value="10:30 AM">10:30 AM</option>
+                            <option value="12:00 PM">12:00 PM</option>
+                            <option value="02:00 PM">02:00 PM</option>
+                            <option value="03:30 PM">03:30 PM</option>
+                            <option value="05:00 PM">05:00 PM</option>
+                            <option value="06:30 PM">06:30 PM</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Customer Details -->
+                <div class="border-t border-dark-700 pt-4 space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 uppercase mb-1">Full Name</label>
+                        <input type="text" id="book-name" required class="w-full bg-dark-900 border border-dark-600 rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-gold-500 text-sm" placeholder="e.g. Samuel Okon">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 uppercase mb-1">Phone Number <span class="text-gold-500">*</span></label>
+                        <input type="tel" id="book-phone" required class="w-full bg-dark-900 border border-dark-600 rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-gold-500 text-sm" placeholder="+234 700 000 0000">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 uppercase mb-1">Email Address</label>
+                        <input type="email" id="book-email" required class="w-full bg-dark-900 border border-dark-600 rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-gold-500 text-sm" placeholder="name@example.com">
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full py-3 bg-gold-500 hover:bg-gold-600 text-dark-900 font-bold rounded-lg shadow-md transition text-sm mt-4">
+                    Confirm Appointment
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 space-y-3 pointer-events-none"></div>
+
+    <script>
+        // --- APP DATA & SERVICES CONFIGURATION (Naira ₦) ---
+        const SERVICES_DATA = [
+            { id: '1', name: 'Signature Fade & Trim', price: 3500, duration: '35 min', desc: 'Precision fade with clean lineup, razor neck shave, and premium oil finish.' },
+            { id: '2', name: 'Buzz Cut & Sharp Edge', price: 2500, duration: '25 min', desc: 'Uniform precision buzz cut with sharp hairline shaping.' },
+            { id: '3', name: 'Beard Sculpting & Hot Towel', price: 3000, duration: '30 min', desc: 'Beard line definition, hot towel dampening, and nourishing conditioning oil.' },
+            { id: '4', name: 'Executive Grooming Package', price: 8500, duration: '60 min', desc: 'Full haircut, beard grooming, facial massage, and scalp rejuvenation.' },
+            { id: '5', name: 'Dreadlock Maintenance & Style', price: 10000, duration: '75 min', desc: 'Loc re-twist, scalp wash, and precision hairline cut.' },
+            { id: '6', name: 'VIP Crown Treatment', price: 15000, duration: '90 min', desc: 'Complete premium cut, hot towel straight-razor shave, face mask, and herbal wash.' }
+        ];
+
+        // --- HAIRSTYLE GALLERY DATA & LOCAL/REMOTE FALLBACK IMAGES ---
+        const GALLERY_STYLES = [
+            { name: 'Fade', file: 'Fade.jpg', unsplash: 'https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=600&auto=format&fit=crop&q=80', desc: 'Clean gradient side taper with sharp hair alignment.' },
+            { name: 'Buzz Cut', file: 'Buzz Cut.jpg', unsplash: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=600&auto=format&fit=crop&q=80', desc: 'Sleek, low-maintenance short length for bold minimalists.' },
+            { name: 'Caesar Cut', file: 'Caesar Cut.jpg', unsplash: 'https://images.unsplash.com/photo-1517832606299-7ae9b720a186?w=600&auto=format&fit=crop&q=80', desc: 'Short horizontally cut fringe styling with defined edges.' },
+            { name: 'Comb Over', file: 'Comb Over.jpg', unsplash: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&auto=format&fit=crop&q=80', desc: 'Classic side part with smooth brushed hair flow.' },
+            { name: 'Crew Cut', file: 'Crew Cut.jpg', unsplash: 'https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=600&auto=format&fit=crop&q=80', desc: 'Sporty top length tailored with neat tapered sides.' },
+            { name: 'Dread', file: 'Dread.jpg', unsplash: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=600&auto=format&fit=crop&q=80', desc: 'Well-maintained loc twists coupled with low temple fades.' },
+            { name: 'Man Bun', file: 'Man Bun.jpg', unsplash: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&auto=format&fit=crop&q=80', desc: 'Long top hair tied into a neat knot with sharp undercut edges.' },
+            { name: 'Mohawk', file: 'Mohawk.jpg', unsplash: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80', desc: 'Striking center strip styling with clean faded sides.' },
+            { name: 'Bro Flow', file: 'Bro Flow.jpg', unsplash: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&auto=format&fit=crop&q=80', desc: 'Relaxed medium length swept backwards naturally.' },
+            { name: 'Bald', file: 'bald.jpg', unsplash: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&auto=format&fit=crop&q=80', desc: 'Ultra-clean razor bald scalp treatment and skin polish.' }
+        ];
+
+        // Seeded Users (Admin routing email: hormola25@gmail.com)
+        const INITIAL_USERS = [
+            { id: 'u_admin', name: 'Ola CutZ Admin', email: 'hormola25@gmail.com', phone: '+234 701 603 7881', password: 'admin', role: 'admin' },
+            { id: 'u_client', name: 'Tunde Afolayan', email: 'tunde@example.com', phone: '+234 802 345 6789', password: 'user123', role: 'customer' }
+        ];
+
+        // Seeded Initial Appointments
+        const INITIAL_APPOINTMENTS = [
+            { id: 'apt_201', userName: 'Tunde Afolayan', userEmail: 'tunde@example.com', userPhone: '+234 802 345 6789', location: 'Ilorin, Kwara State', serviceName: 'Signature Fade & Trim', servicePrice: 3500, date: '2026-09-20', time: '10:30 AM', status: 'Confirmed' },
+            { id: 'apt_202', userName: 'Emeka Nwosu', userEmail: 'emeka@example.com', userPhone: '+234 813 987 6543', location: 'Lagos State', serviceName: 'Executive Grooming Package', servicePrice: 8500, date: '2026-09-22', time: '02:00 PM', status: 'Confirmed' }
+        ];
+
+        let activeGalleryFilter = 'All';
+
+        // --- LOCALSTORAGE STORAGE HANDLERS ---
+        function getStoredUsers() {
+            const data = localStorage.getItem('olacutz_users');
+            return data ? JSON.parse(data) : INITIAL_USERS;
+        }
+
+        function saveUsers(users) {
+            localStorage.setItem('olacutz_users', JSON.stringify(users));
+        }
+
+        function getStoredAppts() {
+            const data = localStorage.getItem('olacutz_appointments');
+            return data ? JSON.parse(data) : INITIAL_APPOINTMENTS;
+        }
+
+        function saveAppts(appts) {
+            localStorage.setItem('olacutz_appointments', JSON.stringify(appts));
+        }
+
+        function getCurrentUser() {
+            const data = localStorage.getItem('olacutz_session');
+            return data ? JSON.parse(data) : null;
+        }
+
+        function setCurrentUser(user) {
+            if (user) {
+                localStorage.setItem('olacutz_session', JSON.stringify(user));
+            } else {
+                localStorage.removeItem('olacutz_session');
+            }
+        }
+
+        if (!localStorage.getItem('olacutz_users')) saveUsers(INITIAL_USERS);
+        if (!localStorage.getItem('olacutz_appointments')) saveAppts(INITIAL_APPOINTMENTS);
+
+        // --- NAVIGATION & ROUTING ---
+        function navigateTo(viewId) {
+            const views = document.querySelectorAll('.page-view');
+            views.forEach(v => v.classList.add('hidden'));
+
+            const target = document.getElementById(`view-${viewId}`);
+            if (target) {
+                target.classList.remove('hidden');
+            } else {
+                document.getElementById('view-home').classList.remove('hidden');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            updateNavUI();
+            
+            if (viewId === 'customer') renderCustomerDashboard();
+            if (viewId === 'admin') renderAdminDashboard();
+        }
+
+        function scrollToSection(sectionId) {
+            const currentView = Array.from(document.querySelectorAll('.page-view')).find(v => !v.classList.contains('hidden'));
+            if (currentView.id !== 'view-home') {
+                navigateTo('home');
+                setTimeout(() => {
+                    const el = document.getElementById(sectionId);
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            } else {
+                const el = document.getElementById(sectionId);
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function updateNavUI() {
+            const currentUser = getCurrentUser();
+            const navAuth = document.getElementById('nav-auth-container');
+            const dynamicLinks = document.getElementById('dynamic-nav-links');
+            const mobileAuth = document.getElementById('mobile-auth-container');
+            const mobileLinks = document.getElementById('mobile-dynamic-links');
+
+            if (!currentUser) {
+                navAuth.innerHTML = `
+                    <button onclick="openAuthModal('login')" class="text-sm font-semibold text-gray-300 hover:text-white px-3 py-2">Sign In</button>
+                    <button onclick="openAuthModal('register')" class="text-sm font-semibold bg-gold-500 hover:bg-gold-600 text-dark-900 px-4 py-2 rounded-lg transition">Register</button>
+                `;
+                dynamicLinks.innerHTML = '';
+                mobileLinks.innerHTML = '';
+                mobileAuth.innerHTML = `
+                    <button onclick="openAuthModal('login'); toggleMobileMenu()" class="block w-full text-left py-2 text-gold-500 font-semibold">Sign In / Register</button>
+                `;
+            } else {
+                const roleBadge = currentUser.role === 'admin' 
+                    ? '<span class="text-[10px] bg-red-500/20 text-red-400 border border-red-500/30 px-2 py-0.5 rounded uppercase font-bold">Admin</span>' 
+                    : '<span class="text-[10px] bg-gold-500/20 text-gold-400 border border-gold-500/30 px-2 py-0.5 rounded uppercase font-bold">Client</span>';
+
+                navAuth.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="text-right hidden lg:block">
+                            <p class="text-xs font-bold text-white">${currentUser.name}</p>
+                            ${roleBadge}
+                        </div>
+                        <button onclick="handleLogout()" class="px-3 py-1.5 bg-dark-700 hover:bg-dark-600 text-gray-300 text-xs font-semibold rounded border border-dark-600 transition">
+                            <i class="fa-solid fa-right-from-bracket mr-1"></i> Logout
+                        </button>
+                    </div>
+                `;
+
+                if (currentUser.role === 'admin') {
+                    dynamicLinks.innerHTML = `
+                        <button onclick="navigateTo('admin')" class="text-gold-500 hover:underline font-semibold text-sm flex items-center gap-1">
+                            <i class="fa-solid fa-gauge-high"></i> Admin Panel
+                        </button>
+                    `;
+                    mobileLinks.innerHTML = `
+                        <button onclick="navigateTo('admin'); toggleMobileMenu()" class="block w-full text-left py-2 text-gold-500 font-semibold">Admin Panel</button>
+                    `;
+                } else {
+                    dynamicLinks.innerHTML = `
+                        <button onclick="navigateTo('customer')" class="text-gold-500 hover:underline font-semibold text-sm flex items-center gap-1">
+                            <i class="fa-solid fa-user"></i> My Dashboard
+                        </button>
+                    `;
+                    mobileLinks.innerHTML = `
+                        <button onclick="navigateTo('customer'); toggleMobileMenu()" class="block w-full text-left py-2 text-gold-500 font-semibold">My Dashboard</button>
+                    `;
+                }
+
+                mobileAuth.innerHTML = `
+                    <div class="py-2">
+                        <p class="text-sm font-bold text-white">${currentUser.name} (${currentUser.role})</p>
+                        <button onclick="handleLogout(); toggleMobileMenu()" class="mt-2 text-xs text-red-400 font-semibold">Logout</button>
+                    </div>
+                `;
+            }
+        }
+
+        // --- AUTH & USER REGISTRATION ---
+        function openAuthModal(defaultTab = 'login') {
+            switchAuthTab(defaultTab);
+            document.getElementById('auth-modal').classList.remove('hidden');
+        }
+
+        function closeAuthModal() {
+            document.getElementById('auth-modal').classList.add('hidden');
+        }
+
+        function switchAuthTab(tab) {
+            const loginForm = document.getElementById('form-login');
+            const regForm = document.getElementById('form-register');
+            const tabLogin = document.getElementById('tab-login');
+            const tabReg = document.getElementById('tab-register');
+
+            if (tab === 'login') {
+                loginForm.classList.remove('hidden');
+                regForm.classList.add('hidden');
+                tabLogin.className = "flex-1 py-2 text-sm font-semibold text-gold-500 border-b-2 border-gold-500 text-center";
+                tabReg.className = "flex-1 py-2 text-sm font-semibold text-gray-400 border-b-2 border-transparent hover:text-gray-200 text-center";
+            } else {
+                loginForm.classList.add('hidden');
+                regForm.classList.remove('hidden');
+                tabReg.className = "flex-1 py-2 text-sm font-semibold text-gold-500 border-b-2 border-gold-500 text-center";
+                tabLogin.className = "flex-1 py-2 text-sm font-semibold text-gray-400 border-b-2 border-transparent hover:text-gray-200 text-center";
+            }
+        }
+
+        function toggleDemoAssist() {
+            const box = document.getElementById('demo-assist-box');
+            box.classList.toggle('hidden');
+        }
+
+        function fillDemo(role) {
+            if (role === 'admin') {
+                document.getElementById('login-email').value = 'hormola25@gmail.com';
+                document.getElementById('login-password').value = 'admin';
+            } else {
+                document.getElementById('login-email').value = 'tunde@example.com';
+                document.getElementById('login-password').value = 'user123';
+            }
+        }
+
+        function handleLoginSubmit(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value.trim();
+
+            const users = getStoredUsers();
+            let match = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
+
+            // Auto-grant admin role for hormola25@gmail.com
+            if (email.toLowerCase() === 'hormola25@gmail.com') {
+                if (!match) {
+                    match = { id: 'u_admin', name: 'Ola CutZ Admin', email: 'hormola25@gmail.com', phone: '+234 701 603 7881', password: password, role: 'admin' };
+                    users.push(match);
+                    saveUsers(users);
+                } else {
+                    match.role = 'admin';
+                }
+            }
+
+            if (match) {
+                setCurrentUser(match);
+                closeAuthModal();
+                showToast(`Welcome back, ${match.name}!`, 'success');
+
+                if (match.role === 'admin') {
+                    navigateTo('admin');
+                } else {
+                    navigateTo('customer');
+                }
+            } else {
+                showToast('Invalid email or password', 'error');
+            }
+        }
+
+        function handleRegisterSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('reg-name').value.trim();
+            const phone = document.getElementById('reg-phone').value.trim();
+            const email = document.getElementById('reg-email').value.trim();
+            const password = document.getElementById('reg-password').value.trim();
+
+            if (!phone) {
+                showToast('Phone number is strictly required for booking contacts', 'error');
+                return;
+            }
+
+            const users = getStoredUsers();
+            if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
+                showToast('An account with this email already exists', 'error');
+                return;
+            }
+
+            // Determine if admin email
+            const role = (email.toLowerCase() === 'hormola25@gmail.com') ? 'admin' : 'customer';
+
+            const newUser = {
+                id: 'u_' + Date.now(),
+                name: name,
+                phone: phone,
+                email: email,
+                password: password,
+                role: role
+            };
+
+            users.push(newUser);
+            saveUsers(users);
+            setCurrentUser(newUser);
+
+            closeAuthModal();
+            showToast('Account created successfully!', 'success');
+            
+            if (role === 'admin') {
+                navigateTo('admin');
+            } else {
+                navigateTo('customer');
+            }
+        }
+
+        function handleLogout() {
+            setCurrentUser(null);
+            showToast('Logged out successfully', 'info');
+            navigateTo('home');
+        }
+
+        // --- HAIRSTYLE GALLERY RENDER ---
+        function renderGallery() {
+            const filterContainer = document.getElementById('gallery-filters');
+            const galleryGrid = document.getElementById('gallery-grid');
+
+            const categories = ['All', ...GALLERY_STYLES.map(g => g.name)];
+            
+            filterContainer.innerHTML = categories.map(cat => `
+                <button onclick="setGalleryFilter('${cat}')" class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition ${activeGalleryFilter === cat ? 'bg-gold-500 text-dark-900 shadow-md' : 'bg-dark-800 text-gray-300 hover:bg-dark-700 border border-dark-700'}">
+                    ${cat}
+                </button>
+            `).join('');
+
+            const filtered = activeGalleryFilter === 'All' 
+                ? GALLERY_STYLES 
+                : GALLERY_STYLES.filter(g => g.name === activeGalleryFilter);
+
+            galleryGrid.innerHTML = filtered.map(item => `
+                <div class="bg-dark-800 rounded-xl overflow-hidden border border-dark-700 group hover:border-gold-500/50 transition flex flex-col justify-between">
+                    <div class="h-48 relative overflow-hidden bg-dark-700">
+                        <img src="${item.file}" 
+                             onerror="this.onerror=null; this.src='${item.unsplash}';" 
+                             alt="${item.name}" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <span class="absolute top-2 right-2 px-2 py-0.5 bg-dark-900/80 backdrop-blur-sm text-gold-500 text-[10px] font-bold rounded uppercase border border-gold-500/30">${item.name}</span>
+                    </div>
+                    <div class="p-4 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h4 class="font-bold text-white text-base mb-1">${item.name} Style</h4>
+                            <p class="text-xs text-gray-400 leading-relaxed mb-3">${item.desc}</p>
+                        </div>
+                        <button onclick="openBookingModal()" class="w-full py-1.5 bg-dark-700 hover:bg-gold-500 hover:text-dark-900 text-gold-500 text-xs font-semibold rounded transition">
+                            Select Style
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function setGalleryFilter(cat) {
+            activeGalleryFilter = cat;
+            renderGallery();
+        }
+
+        // --- SERVICES RENDER & BOOKING MODAL ---
+        function renderServicesGrid() {
+            const container = document.getElementById('services-grid');
+            const selectService = document.getElementById('book-service');
+
+            container.innerHTML = SERVICES_DATA.map(s => `
+                <div class="bg-dark-900 border border-dark-700 rounded-xl p-6 hover:border-gold-500/50 transition duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <h4 class="text-xl font-bold text-white">${s.name}</h4>
+                            <span class="text-xl font-extrabold text-gold-500">₦${s.price.toLocaleString()}</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-4 leading-relaxed">${s.desc}</p>
+                    </div>
+                    <div class="pt-4 border-t border-dark-700/60 flex items-center justify-between">
+                        <span class="text-xs text-gray-500"><i class="fa-regular fa-clock text-gold-500 mr-1"></i> ${s.duration}</span>
+                        <button onclick="openBookingModal('${s.id}')" class="px-4 py-2 bg-dark-700 hover:bg-gold-500 hover:text-dark-900 text-gold-500 font-semibold rounded text-xs transition">
+                            Book Cut
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            selectService.innerHTML = SERVICES_DATA.map(s => `
+                <option value="${s.id}">${s.name} - ₦${s.price.toLocaleString()} (${s.duration})</option>
+            `).join('');
+        }
+
+        function openBookingModalWithLocation(locationStr) {
+            document.getElementById('book-location').value = locationStr;
+            openBookingModal();
+        }
+
+        function openBookingModal(serviceId = null) {
+            const currentUser = getCurrentUser();
+            
+            if (serviceId) {
+                document.getElementById('book-service').value = serviceId;
+            }
+
+            const today = new Date().toISOString().split('T')[0];
+            const dateInput = document.getElementById('book-date');
+            dateInput.min = today;
+            if (!dateInput.value) dateInput.value = today;
+
+            if (currentUser) {
+                document.getElementById('book-name').value = currentUser.name || '';
+                document.getElementById('book-phone').value = currentUser.phone || '';
+                document.getElementById('book-email').value = currentUser.email || '';
+            }
+
+            document.getElementById('booking-modal').classList.remove('hidden');
+        }
+
+        function closeBookingModal() {
+            document.getElementById('booking-modal').classList.add('hidden');
+        }
+
+        function handleBookingSubmit(e) {
+            e.preventDefault();
+            const location = document.getElementById('book-location').value;
+            const serviceId = document.getElementById('book-service').value;
+            const date = document.getElementById('book-date').value;
+            const time = document.getElementById('book-time').value;
+            const name = document.getElementById('book-name').value.trim();
+            const phone = document.getElementById('book-phone').value.trim();
+            const email = document.getElementById('book-email').value.trim();
+
+            if (!phone) {
+                showToast('Please enter a valid phone number', 'error');
+                return;
+            }
+
+            const selectedService = SERVICES_DATA.find(s => s.id === serviceId);
+
+            const newAppt = {
+                id: 'apt_' + Date.now(),
+                userName: name,
+                userPhone: phone,
+                userEmail: email,
+                location: location,
+                serviceName: selectedService ? selectedService.name : 'Signature Cut',
+                servicePrice: selectedService ? selectedService.price : 3500,
+                date: date,
+                time: time,
+                status: 'Confirmed'
+            };
+
+            const appts = getStoredAppts();
+            appts.push(newAppt);
+            saveAppts(appts);
+
+            closeBookingModal();
+            showToast('Appointment booked successfully!', 'success');
+
+            const currentUser = getCurrentUser();
+            if (currentUser && currentUser.role === 'customer') {
+                navigateTo('customer');
+            } else if (currentUser && currentUser.role === 'admin') {
+                navigateTo('admin');
+            }
+        }
+
+        // --- CUSTOMER DASHBOARD ---
+        function renderCustomerDashboard() {
+            const currentUser = getCurrentUser();
+            if (!currentUser) return;
+
+            document.getElementById('cust-display-name').innerText = currentUser.name;
+            document.getElementById('cust-card-name').innerText = currentUser.name;
+            document.getElementById('cust-card-email').innerText = currentUser.email;
+            document.getElementById('cust-card-phone').innerText = currentUser.phone || 'Phone not set';
+
+            const appts = getStoredAppts().filter(a => a.userEmail.toLowerCase() === currentUser.email.toLowerCase());
+            document.getElementById('customer-appt-count').innerText = `${appts.length} Bookings`;
+
+            const tbody = document.getElementById('customer-appointments-tbody');
+            if (appts.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-6 text-gray-500">No appointments found. Book one today!</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = appts.map(a => `
+                <tr class="hover:bg-dark-700/50 transition">
+                    <td class="py-3 px-4 font-semibold text-white">${a.serviceName}</td>
+                    <td class="py-3 px-4 text-xs text-gold-500 font-medium">${a.location || 'Ilorin'}</td>
+                    <td class="py-3 px-4 text-xs">${a.date} at ${a.time}</td>
+                    <td class="py-3 px-4 font-semibold text-gold-500">₦${Number(a.servicePrice).toLocaleString()}</td>
+                    <td class="py-3 px-4">${getStatusBadge(a.status)}</td>
+                    <td class="py-3 px-4 text-right">
+                        ${a.status === 'Confirmed' ? `
+                            <button onclick="cancelAppointment('${a.id}')" class="text-xs text-red-400 hover:text-red-300 font-medium">Cancel</button>
+                        ` : '-'}
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // --- ADMIN DASHBOARD ---
+        function renderAdminDashboard() {
+            const appts = getStoredAppts();
+            const users = getStoredUsers();
+
+            const totalRevenue = appts
+                .filter(a => a.status !== 'Cancelled')
+                .reduce((sum, a) => sum + Number(a.servicePrice || 0), 0);
+            
+            const upcomingCount = appts.filter(a => a.status === 'Confirmed').length;
+            const customerCount = users.filter(u => u.role === 'customer').length;
+
+            document.getElementById('admin-stat-revenue').innerText = `₦${totalRevenue.toLocaleString()}`;
+            document.getElementById('admin-stat-total').innerText = appts.length;
+            document.getElementById('admin-stat-upcoming').innerText = upcomingCount;
+            document.getElementById('admin-stat-clients').innerText = customerCount;
+
+            renderAdminAppointments();
+            renderAdminClients();
+        }
+
+        function renderAdminAppointments() {
+            const appts = getStoredAppts();
+            const statusFilter = document.getElementById('admin-filter-status').value;
+            const locationFilter = document.getElementById('admin-filter-location').value;
+            const tbody = document.getElementById('admin-appointments-tbody');
+
+            let filtered = appts;
+            if (statusFilter !== 'all') {
+                filtered = filtered.filter(a => a.status === statusFilter);
+            }
+            if (locationFilter !== 'all') {
+                filtered = filtered.filter(a => (a.location || 'Ilorin, Kwara State') === locationFilter);
+            }
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center py-6 text-gray-500">No appointments found matching filters.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(a => `
+                <tr class="hover:bg-dark-700/50 transition">
+                    <td class="py-3 px-4">
+                        <div class="font-semibold text-white">${a.userName}</div>
+                        <div class="text-xs text-gold-500 font-mono"><a href="tel:${a.userPhone}" class="hover:underline"><i class="fa-solid fa-phone mr-1"></i>${a.userPhone || 'No Phone'}</a></div>
+                        <div class="text-[11px] text-gray-500">${a.userEmail}</div>
+                    </td>
+                    <td class="py-3 px-4 text-xs font-semibold text-gray-300">${a.location || 'Ilorin, Kwara State'}</td>
+                    <td class="py-3 px-4 text-white text-xs">${a.serviceName}</td>
+                    <td class="py-3 px-4 text-xs">${a.date}<br/><span class="text-gray-500">${a.time}</span></td>
+                    <td class="py-3 px-4 font-semibold text-gold-500 text-xs">₦${Number(a.servicePrice).toLocaleString()}</td>
+                    <td class="py-3 px-4">${getStatusBadge(a.status)}</td>
+                    <td class="py-3 px-4 text-center">
+                        <select onchange="updateAppointmentStatus('${a.id}', this.value)" class="bg-dark-900 border border-dark-600 rounded text-xs text-gray-300 px-2 py-1 focus:outline-none focus:border-gold-500">
+                            <option value="Confirmed" ${a.status === 'Confirmed' ? 'selected' : ''}>Confirmed</option>
+                            <option value="Completed" ${a.status === 'Completed' ? 'selected' : ''}>Completed</option>
+                            <option value="Cancelled" ${a.status === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
+                        </select>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderAdminClients() {
+            const users = getStoredUsers();
+            const tbody = document.getElementById('admin-clients-tbody');
+
+            tbody.innerHTML = users.map(u => `
+                <tr class="hover:bg-dark-700/50 transition">
+                    <td class="py-3 px-4 font-semibold text-white">${u.name}</td>
+                    <td class="py-3 px-4 text-xs text-gray-400">${u.email}</td>
+                    <td class="py-3 px-4 text-xs font-mono text-gold-500">
+                        <a href="tel:${u.phone}" class="hover:underline flex items-center gap-1"><i class="fa-solid fa-phone text-[10px]"></i> ${u.phone || 'N/A'}</a>
+                    </td>
+                    <td class="py-3 px-4">
+                        <span class="px-2 py-0.5 rounded text-[10px] uppercase font-bold ${u.role === 'admin' ? 'bg-red-500/20 text-red-400 border border-red-500/30' : 'bg-gold-500/20 text-gold-400 border border-gold-500/30'}">${u.role}</span>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function updateAppointmentStatus(apptId, newStatus) {
+            const appts = getStoredAppts();
+            const target = appts.find(a => a.id === apptId);
+            if (target) {
+                target.status = newStatus;
+                saveAppts(appts);
+                showToast(`Status updated to ${newStatus}`, 'info');
+                renderAdminDashboard();
+            }
+        }
+
+        function cancelAppointment(apptId) {
+            updateAppointmentStatus(apptId, 'Cancelled');
+            renderCustomerDashboard();
+        }
+
+        function getStatusBadge(status) {
+            if (status === 'Confirmed') {
+                return `<span class="px-2.5 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-full text-[11px] font-medium">Confirmed</span>`;
+            } else if (status === 'Completed') {
+                return `<span class="px-2.5 py-0.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full text-[11px] font-medium">Completed</span>`;
+            } else {
+                return `<span class="px-2.5 py-0.5 bg-red-500/10 text-red-400 border border-red-500/20 rounded-full text-[11px] font-medium">Cancelled</span>`;
+            }
+        }
+
+        // --- TOAST NOTIFICATION UTILITY ---
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+
+            let bgColor = 'bg-dark-800 border-gold-500 text-white';
+            let icon = 'fa-circle-info text-gold-500';
+
+            if (type === 'success') {
+                bgColor = 'bg-dark-800 border-emerald-500 text-white';
+                icon = 'fa-circle-check text-emerald-400';
+            } else if (type === 'error') {
+                bgColor = 'bg-dark-800 border-red-500 text-white';
+                icon = 'fa-circle-xmark text-red-400';
+            }
+
+            toast.className = `flex items-center gap-3 px-4 py-3 rounded-lg border shadow-xl ${bgColor} transition-all duration-300 transform translate-y-2 opacity-0 pointer-events-auto max-w-xs text-sm`;
+            toast.innerHTML = `<i class="fa-solid ${icon} text-base"></i> <span>${message}</span>`;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 10);
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        window.onload = function() {
+            renderServicesGrid();
+            renderGallery();
+            updateNavUI();
+            
+            const currentUser = getCurrentUser();
+            if (currentUser) {
+                if (currentUser.role === 'admin') {
+                    navigateTo('admin');
+                } else {
+                    navigateTo('customer');
+                }
+            } else {
+                navigateTo('home');
+            }
+        };
+    </script>
+</body>
+</html>
